@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="ad.size" content="width=300,height=600">
+<title>TM Börsenverlag – Vermögensverwaltung – Berater-Geschwätz – Fireplace left Sloganbanner 300x600</title>
+<script type="text/javascript">
+  /* clickTag wird vom Adserver befüllt (Google Ads / DoubleClick Standard) */
+  var clickTag = "";
+</script>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+  #banner {
+    position: relative;
+    width: 300px;
+    height: 600px;
+    overflow: hidden;
+    background: #ffffff url("background.png") no-repeat 0 0;
+    background-size: 300px 600px;
+    cursor: pointer;
+  }
+  #copy {
+    position: absolute;
+    left: 30px;
+    top: 78px;
+    width: 260px;
+    color: #002e54;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 26px;
+    line-height: 29px;
+    letter-spacing: -1px;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Feste Absatzhöhen, damit sich beim Tippen nichts verschiebt */
+  #p1 { height: 58px; } /* 2 Zeilen à 29px */
+  #p2 { height: 116px; margin-top: 20px; } /* 4 Zeilen à 29px */
+
+  /* Tippbalken (Block-Cursor wie in alten Texteingabeprogrammen) */
+  #cursor {
+    display: inline-block;
+    width: 13px;
+    height: 20px;
+    margin-left: 2px;
+    vertical-align: -1px;
+    background: #002e54;
+  }
+  #cursor.blink {
+    animation: cursorBlink 1s steps(1, end) infinite;
+  }
+  #cursor.off {
+    display: none;
+  }
+  @keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0; }
+  }
+</style>
+</head>
+<body>
+<div id="banner">
+  <div id="copy">
+    <div id="p1"></div>
+    <div id="p2"></div>
+  </div>
+</div>
+<noscript><img src="fallback.png" width="300" height="600" alt="Keine Lust mehr auf Berater-Geschwätz? Vermögensverwaltung geht auch transparent, regelbasiert und innovativ! – Quality-Investments made in Rosenheim! Denn Vermögen braucht Regeln! – boerse.de Vermögensverwaltung"></noscript>
+
+<script type="text/javascript">
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------
+     Konfiguration
+  ------------------------------------------------------------------ */
+  var CONFIG = {
+    startDelay: 700,       // ms – Cursor blinkt, bevor das Tippen beginnt
+    typeSpeed: 28,         // ms – Grundtempo pro Zeichen
+    typeJitter: 18,        // ms – zufällige Schwankung für natürliches Tippen
+    lineDelay: 140,        // ms – kurze Pause am Zeilenende
+    paragraphPause: 600,   // ms – Pause zwischen den beiden Absätzen
+    endBlinkTime: 4000,    // ms – Cursor blinkt nach dem letzten Zeichen weiter
+    loops: 1,              // Anzahl kompletter Durchläufe (Ad-Specs: Animation endet danach)
+    loopPause: 1600        // ms – Pause vor einem erneuten Durchlauf
+  };
+
+  /* Zeilenumbrüche exakt wie im Original-Banner */
+  var PARAGRAPHS = [
+    { el: document.getElementById("p1"),
+      lines: ["Keine Lust mehr auf", "Berater-Geschwätz?"] },
+    { el: document.getElementById("p2"),
+      lines: ["Vermögensverwaltung", "geht auch transparent,", "regelbasiert und", "innovativ!"] }
+  ];
+
+  var cursor = document.createElement("span");
+  cursor.id = "cursor";
+
+  function setBlink(on) {
+    if (on) { cursor.className = "blink"; } else { cursor.className = ""; }
+  }
+
+  function clearParagraphs() {
+    for (var i = 0; i < PARAGRAPHS.length; i++) {
+      PARAGRAPHS[i].el.innerHTML = "";
+    }
+  }
+
+  function typeParagraph(p, done) {
+    var li = 0, ci = 0;
+    var lineEl = document.createElement("span");
+    p.el.appendChild(lineEl);
+    p.el.appendChild(cursor);
+    setBlink(false); // beim Tippen bleibt der Balken durchgehend sichtbar
+
+    function tick() {
+      var line = p.lines[li];
+      if (ci < line.length) {
+        ci++;
+        lineEl.textContent = line.substring(0, ci);
+        window.setTimeout(tick, CONFIG.typeSpeed + Math.random() * CONFIG.typeJitter);
+      } else if (li < p.lines.length - 1) {
+        li++;
+        ci = 0;
+        p.el.insertBefore(document.createElement("br"), cursor);
+        lineEl = document.createElement("span");
+        p.el.insertBefore(lineEl, cursor);
+        window.setTimeout(tick, CONFIG.lineDelay);
+      } else {
+        done();
+      }
+    }
+    tick();
+  }
+
+  function play(loop) {
+    clearParagraphs();
+    PARAGRAPHS[0].el.appendChild(cursor);
+    setBlink(true);
+
+    window.setTimeout(function () {
+      typeParagraph(PARAGRAPHS[0], function () {
+        setBlink(true); // kurzes Blinken am Absatzende
+        window.setTimeout(function () {
+          typeParagraph(PARAGRAPHS[1], function () {
+            setBlink(true);
+            window.setTimeout(function () {
+              if (loop + 1 < CONFIG.loops) {
+                window.setTimeout(function () { play(loop + 1); }, CONFIG.loopPause);
+              } else {
+                cursor.className = "off"; // Animationsende: Endframe = fertiger Text
+              }
+            }, CONFIG.endBlinkTime);
+          });
+        }, CONFIG.paragraphPause);
+      });
+    }, CONFIG.startDelay);
+  }
+
+  function showFinalFrame() {
+    for (var i = 0; i < PARAGRAPHS.length; i++) {
+      PARAGRAPHS[i].el.innerHTML = PARAGRAPHS[i].lines.join("<br>");
+    }
+  }
+
+  /* Klick auf den Banner öffnet das Kampagnenziel (clickTag) */
+  document.getElementById("banner").addEventListener("click", function () {
+    if (window.clickTag) { window.open(window.clickTag, "_blank"); }
+  });
+
+  /* Nutzer mit reduzierter Bewegung sehen sofort den fertigen Text */
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    showFinalFrame();
+  } else {
+    play(0);
+  }
+})();
+</script>
+</body>
+</html>
