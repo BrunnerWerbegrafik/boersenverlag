@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="ad.size" content="width=1000,height=150">
+<title>TM Börsenverlag – Technologiefonds – Fireplace top 1000x150</title>
+<script type="text/javascript">
+  /* clickTag wird vom Adserver befüllt (Google Ads / DoubleClick Standard) */
+  var clickTag = "";
+</script>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+  #banner {
+    position: relative;
+    width: 1000px;
+    height: 150px;
+    overflow: hidden;
+    background: #edeff3 url("background.png") no-repeat 0 0;
+    background-size: 1000px 150px;
+    cursor: pointer;
+  }
+  /* Endlos rollender Logo-Streifen.
+     Der Streifen (logos.png) ist exakt 1178px hoch (19 Logo-Reihen à 62px)
+     und kachelt nahtlos über repeat-y. Die Animation schiebt den Streifen
+     um genau eine Kachelhöhe (1178px) nach unten und springt dann
+     unsichtbar auf 0 zurück – der Loop läuft dadurch endlos ohne Bruch. */
+  #strip {
+    position: absolute;
+    left: 10px;                 /* zentriert die 980px breiten Logos */
+    top: -1178px;
+    width: 980px;
+    height: 1328px;             /* Kachelhöhe + Bannerhöhe */
+    background: url("logos.png") repeat-y 0 12px;
+    animation: scrollLogos 65s linear infinite;
+    will-change: transform;
+  }
+  /* Weicher weißer Verlauf über den Logos an Ober- und Unterkante */
+  #gradient {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1000px;
+    height: 150px;
+    background: url("gradient.png") no-repeat 0 0;
+    pointer-events: none;
+  }
+  @keyframes scrollLogos {
+    from { transform: translateY(0); }
+    to   { transform: translateY(1178px); }
+  }
+  /* Nutzer mit reduzierter Bewegung sehen das statische Motiv */
+  @media (prefers-reduced-motion: reduce) {
+    #strip { animation: none; }
+  }
+</style>
+</head>
+<body>
+<div id="banner">
+  <div id="strip"></div>
+  <div id="gradient"></div>
+</div>
+
+<script type="text/javascript">
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------
+     Konfiguration
+  ------------------------------------------------------------------ */
+  var CONFIG = {
+    scrollSpeed: 18   // px pro Sekunde – angenehm langsames Durchrollen
+  };
+
+  var TILE_HEIGHT = 1178; // Kachelhöhe von logos.png in px – nicht ändern
+
+  /* Dauer eines kompletten Durchlaufs aus der Geschwindigkeit berechnen */
+  document.getElementById("strip").style.animationDuration =
+    (TILE_HEIGHT / CONFIG.scrollSpeed) + "s";
+
+  /* Klick auf den Banner öffnet das Kampagnenziel (clickTag) */
+  document.getElementById("banner").addEventListener("click", function () {
+    if (window.clickTag) { window.open(window.clickTag, "_blank"); }
+  });
+})();
+</script>
+</body>
+</html>
