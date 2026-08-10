@@ -68,8 +68,11 @@ var clickTag = "https://…";
 - Für den Adserver den Ordnerinhalt (alle Dateien außer `fallback.jpg`
   und dieser README) als ZIP verpacken; `fallback.jpg` dient als
   statisches Ersatzmotiv.
-- Gesamtgewicht ca. 1,2 MB (fünf Foto-Motive). Falls der Vermarkter ein
-  strengeres Limit vorgibt, können die JPGs stärker komprimiert werden.
+- Gesamtgewicht des kompletten Ordners ca. 750 KB (unter dem
+  1-MB-Limit des Vermarkters). Die Fotos sind mit JPEG-Qualität 97
+  ohne Chroma-Subsampling enkodiert; falls noch weniger Gewicht nötig
+  ist, lässt sich die Qualität weiter reduzieren (bei Qualität 85
+  z. B. ca. 240 KB gesamt).
 - Die Rotation läuft bewusst endlos. Manche Vermarkter schreiben ein
   Animationsende nach 30 Sekunden vor – das bitte ggf. mit dem
   Vermarkter klären.
