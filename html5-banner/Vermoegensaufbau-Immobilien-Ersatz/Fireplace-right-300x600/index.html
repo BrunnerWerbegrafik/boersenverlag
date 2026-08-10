@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="ad.size" content="width=300,height=600">
+<title>TM Börsenverlag – Vermögensaufbau / Immobilien-Ersatz – Fireplace right 300x600</title>
+<script type="text/javascript">
+  /* clickTag wird vom Adserver befüllt (Google Ads / DoubleClick Standard) */
+  var clickTag = "";
+</script>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+  #banner {
+    position: relative;
+    width: 300px;
+    height: 600px;
+    overflow: hidden;
+    background: #0d2a52;
+    cursor: pointer;
+  }
+  #banner img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 600px;
+    display: block;
+  }
+
+  /* Motiv-Gruppen: werden per Crossfade ein-/ausgeblendet */
+  .motif {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 600px;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+  }
+  .motif.show { opacity: 1; }
+
+  /* Elemente bauen sich nacheinander auf, sobald das Motiv .build erhält */
+  .motif .text {
+    opacity: 0;
+    transform: translateY(-14px);
+    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+  }
+  .motif.build .text {
+    opacity: 1;
+    transform: none;
+  }
+  .motif .diagram {
+    opacity: 0;
+    transform: scale(0.7);
+    transform-origin: 50% 75%;
+    transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .motif.build .diagram {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 0.35s;
+  }
+  .motif .cta {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  }
+  .motif.build .cta {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.75s;
+  }
+
+  /* Nutzer mit reduzierter Bewegung: keine Übergänge, nur harte Wechsel */
+  @media (prefers-reduced-motion: reduce) {
+    .motif, .motif .text, .motif .diagram, .motif .cta {
+      transition: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="banner">
+  <div class="motif" id="motif1">
+    <img class="bild" src="bild-vermoegensaufbau.jpg" alt="">
+    <img class="diagram" src="diagram-vermoegensaufbau.png" alt="">
+    <img class="text" src="text-vermoegensaufbau.png" alt="Vermögensaufbau – Ärztin, 49, Praxis läuft.">
+    <img class="cta" src="cta.png" alt="Infos">
+  </div>
+  <div class="motif" id="motif2">
+    <img class="bild" src="bild-immobilien-ersatz.jpg" alt="">
+    <img class="diagram" src="diagram-immobilien-ersatz.png" alt="">
+    <img class="text" src="text-immobilien-ersatz.png" alt="Immobilien-Ersatz – Ehepaar, 66, Haus verkauft">
+    <img class="cta" src="cta.png" alt="Infos">
+  </div>
+  <img id="notice" src="notice.png" alt="Marketing-Anzeige">
+</div>
+<noscript><img src="fallback.jpg" width="300" height="600" alt="Vermögensaufbau – Ärztin, 49, Praxis läuft. Infos"></noscript>
+
+<script type="text/javascript">
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------
+     Konfiguration
+  ------------------------------------------------------------------ */
+  var CONFIG = {
+    motifTime: 3500,   // ms – Anzeigedauer je Motiv (inkl. Element-Aufbau)
+    crossfade: 600,    // ms – Überblenddauer zwischen den Motiven
+    showings: 4        // Anzahl Motiv-Einblendungen gesamt (4 = jedes Motiv
+                       // zweimal, Ende auf Motiv 2; Ad-Specs: Animation endet)
+  };
+
+  var motifs = [
+    document.getElementById("motif1"),
+    document.getElementById("motif2")
+  ];
+
+  function show(index, shownCount) {
+    var m = motifs[index % 2];
+    var prev = motifs[(index + 1) % 2];
+    m.className = "motif show build";
+
+    /* vorheriges Motiv parallel ausblenden (echter Crossfade) … */
+    if (prev.className.indexOf("show") !== -1) {
+      prev.className = "motif build";
+      window.setTimeout(function () {
+        /* … und nach dem Crossfade unsichtbar zurücksetzen */
+        prev.className = "motif";
+      }, CONFIG.crossfade);
+    }
+
+    if (shownCount < CONFIG.showings) {
+      window.setTimeout(function () {
+        show(index + 1, shownCount + 1);
+      }, CONFIG.motifTime);
+    }
+    /* nach der letzten Einblendung bleibt das Motiv als Endframe stehen */
+  }
+
+  show(0, 1);
+
+  /* Klick auf den Banner öffnet das Kampagnenziel (clickTag) */
+  document.getElementById("banner").addEventListener("click", function () {
+    if (window.clickTag) { window.open(window.clickTag, "_blank"); }
+  });
+})();
+</script>
+</body>
+</html>
