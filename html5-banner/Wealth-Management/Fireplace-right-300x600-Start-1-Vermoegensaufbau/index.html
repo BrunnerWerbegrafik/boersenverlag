@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="ad.size" content="width=300,height=600">
+<title>TM Börsenverlag – Wealth Management – Fireplace right 300x600 (Start: Vermögensaufbau)</title>
+<script type="text/javascript">
+  /* clickTag wird vom Adserver befüllt (Google Ads / DoubleClick Standard) */
+  var clickTag = "";
+</script>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+  #banner {
+    position: relative;
+    width: 300px;
+    height: 600px;
+    overflow: hidden;
+    background: #0d2a52;
+    cursor: pointer;
+  }
+  #banner img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 600px;
+    display: block;
+  }
+
+  /* Motiv-Gruppen: das neue Motiv schiebt sich von rechts ins Bild,
+     das alte gleitet gleichzeitig nach links hinaus (Push-Effekt) */
+  .motif {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 600px;
+    opacity: 0;
+    transform: translateX(310px);
+    z-index: 0;
+  }
+  .motif.enter {
+    opacity: 1;
+    transform: translateX(0);
+    z-index: 2;
+    transition: transform 0.6s cubic-bezier(0.22, 0.9, 0.32, 1), opacity 0.35s ease-out;
+  }
+  .motif.exit {
+    opacity: 0;
+    transform: translateX(-120px);
+    z-index: 1;
+    transition: transform 0.6s ease-in, opacity 0.45s ease-in;
+  }
+
+  /* Elemente bauen sich nacheinander kraftvoll auf (Klasse .build) */
+  .motif .text {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  .motif.build .text {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+    transition-delay: 0.25s;
+  }
+  .motif .diagram {
+    opacity: 0;
+    transform: scale(0.35) rotate(-14deg);
+    transform-origin: 50% 75%;
+  }
+  .motif.build .diagram {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    transition: opacity 0.4s ease-out, transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: 0.45s;
+  }
+  .motif .cta {
+    opacity: 0;
+    transform: translateY(30px) scale(0.8);
+  }
+  .motif.build .cta {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.35s ease-out, transform 0.5s cubic-bezier(0.34, 1.8, 0.64, 1);
+    transition-delay: 0.85s;
+  }
+
+  #notice { z-index: 5; }
+
+  /* Nutzer mit reduzierter Bewegung: keine Übergänge, nur harte Wechsel */
+  @media (prefers-reduced-motion: reduce) {
+    .motif, .motif .text, .motif .diagram, .motif .cta {
+      transition: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="banner">
+  <div class="motif" id="motif-vermoegensaufbau">
+    <img class="bild" src="bild-vermoegensaufbau.jpg" alt="">
+    <img class="diagram" src="diagram-vermoegensaufbau.png" alt="">
+    <img class="text" src="text-vermoegensaufbau.png" alt="Vermögensaufbau – Ärztin, 49, Praxis läuft.">
+    <img class="cta" src="cta.png" alt="Infos">
+  </div>
+  <div class="motif" id="motif-immobilien-ersatz">
+    <img class="bild" src="bild-immobilien-ersatz.jpg" alt="">
+    <img class="diagram" src="diagram-immobilien-ersatz.png" alt="">
+    <img class="text" src="text-immobilien-ersatz.png" alt="Immobilien-Ersatz – Ehepaar, 66, Haus verkauft">
+    <img class="cta" src="cta.png" alt="Infos">
+  </div>
+  <div class="motif" id="motif-substanz">
+    <img class="bild" src="bild-substanz.jpg" alt="">
+    <img class="diagram" src="diagram-substanz.png" alt="">
+    <img class="text" src="text-substanz.png" alt="Substanz – Großeltern, 74, drei Enkel">
+    <img class="cta" src="cta.png" alt="Infos">
+  </div>
+  <div class="motif" id="motif-schwerpunkt-gold">
+    <img class="bild" src="bild-schwerpunkt-gold.jpg" alt="">
+    <img class="diagram" src="diagram-schwerpunkt-gold.png" alt="">
+    <img class="text" src="text-schwerpunkt-gold.png" alt="Schwerpunkt Gold – Unternehmer, 81, nach dem Exit">
+    <img class="cta" src="cta.png" alt="Infos">
+  </div>
+  <div class="motif" id="motif-und-sie">
+    <img class="bild" src="bild-und-sie.jpg" alt="">
+    <img class="diagram" src="diagram-und-sie.png" alt="">
+    <img class="text" src="text-und-sie.png" alt="… und Sie? – Ihr Ziel. Ihr Portfolio!">
+    <img class="cta" src="cta.png" alt="Infos">
+  </div>
+  <img id="notice" src="notice.png" alt="Marketing-Anzeige">
+</div>
+<noscript><img src="fallback.jpg" width="300" height="600" alt="Vermögensaufbau – Ärztin, 49, Praxis läuft. Infos"></noscript>
+
+<script type="text/javascript">
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------
+     Konfiguration
+  ------------------------------------------------------------------ */
+  var CONFIG = {
+    motifTime: 3600,   // ms – Anzeigedauer je Motiv (inkl. Element-Aufbau)
+    slide: 600,        // ms – Dauer des Schiebe-Übergangs
+    startIndex: 0      // 0 = Vermögensaufbau zuerst; für die weiteren
+                       // Banner-Varianten hier 1–4 eintragen
+  };
+
+  /* Reihenfolge der Endlosschleife: 1 → 2 → 3 → 4 → 5 → 1 → … */
+  var motifs = [
+    document.getElementById("motif-vermoegensaufbau"),
+    document.getElementById("motif-immobilien-ersatz"),
+    document.getElementById("motif-substanz"),
+    document.getElementById("motif-schwerpunkt-gold"),
+    document.getElementById("motif-und-sie")
+  ];
+
+  var current = null;
+
+  function show(step) {
+    var m = motifs[(CONFIG.startIndex + step) % motifs.length];
+    var prev = current;
+    current = m;
+
+    m.className = "motif";
+    void m.offsetWidth; /* Reflow erzwingen, damit die Startposition greift */
+    m.className = "motif enter build";
+
+    if (prev) {
+      prev.className = "motif build exit";
+      window.setTimeout(function () {
+        /* ausgefahrenes Motiv unsichtbar zurücksetzen */
+        prev.className = "motif";
+      }, CONFIG.slide + 50);
+    }
+
+    /* Endlosschleife: nach der Anzeigedauer zum nächsten Motiv */
+    window.setTimeout(function () {
+      show(step + 1);
+    }, CONFIG.motifTime);
+  }
+
+  show(0);
+
+  /* Klick auf den Banner öffnet das Kampagnenziel (clickTag) */
+  document.getElementById("banner").addEventListener("click", function () {
+    if (window.clickTag) { window.open(window.clickTag, "_blank"); }
+  });
+})();
+</script>
+</body>
+</html>
