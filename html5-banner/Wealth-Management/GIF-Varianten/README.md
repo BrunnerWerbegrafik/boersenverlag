@@ -10,6 +10,8 @@ aus dem Browser abgegriffen.
 
 | Datei                  | Größe   | Beschreibung                                  |
 |------------------------|---------|-----------------------------------------------|
+| `…600x1200_schnitt-aufbau-HD.gif` | ~3,3 MB | **Empfohlen bei hohen Qualitätsansprüchen.** Doppelte Auflösung (Retina), Pro-Motiv-Farbpaletten – Dithering-Korn praktisch unsichtbar |
+| `…300x600_schnitt-aufbau-v2.gif` | ~1,1 MB | Exakt 300 × 600 px, verbesserte Pro-Motiv-Farbpaletten |
 | `…schnitt-aufbau.gif`  | ~990 KB | **Empfohlen.** Harter Schnitt zwischen den Motiven, Element-Aufbau (Text/Diagramm/CTA) voll animiert |
 | `…schnitt-aufbau-lossy.gif` | ~690 KB | Wie oben, zusätzlich verlustbehaftet nachkomprimiert |
 | `…schnitte.gif`        | ~470 KB | Nur 5 Standbilder mit hartem Wechsel (kleinste Datei) |
